@@ -4,7 +4,7 @@ export async function handleMessage(client: Client, message: Message) {
   if (message.author.id === client.user?.id) {
     return
   }
-  const yoni = ('yoni','uni','yone')
+  const yoni = ['yoni','uni','yone']
   if(message.content.toLowerCase().includes(yoni)) {
     message.channel.send('yone')
     try {
