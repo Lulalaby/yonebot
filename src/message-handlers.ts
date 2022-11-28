@@ -5,7 +5,7 @@ export async function handleMessage(client: Client, message: Message) {
     return
   }
 
-  if ((message.content.toLowerCase().includes('yoni')) or (message.content.toLowerCase().includes('uni')) or (message.content.toLowerCase().includes('yone')) {
+  if ((message.content.toLowerCase().includes('yoni')) ||  (message.content.toLowerCase().includes('uni')) ||  (message.content.toLowerCase().includes('yone')) {
     message.channel.send('yone')
     try {
       await message.react('940082584896028762')
