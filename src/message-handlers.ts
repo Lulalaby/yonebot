@@ -7,7 +7,7 @@ export async function handleMessage(client: Client, message: Message) {
     return
   }
 
- if (wordsToReactTo.some(regex => regex.test(message.content)) {
+  if (wordsToReactTo.some(regex => regex.test(message.content)) {
     message.channel.send('yone')
     try {
       await message.react('940082584896028762')
