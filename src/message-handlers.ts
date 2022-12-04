@@ -1,4 +1,3 @@
-
 import {Client, Message} from 'discord.js'
 
 const wordsToReactTo = [/\byoni/i, /\buni/i, /\byone/i]
