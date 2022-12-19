@@ -1,11 +1,15 @@
 import {globals} from './globals'
-import fetch from 'node-fetch'
 
 interface YoneshipMetadata {
     yoneship: 0 | 1
 }
 
+async function getFetch() {
+    return (await import('node-fetch')).default
+}
+
 export async function pushMetadata(token: string, metadata: YoneshipMetadata) {
+    const fetch = await getFetch()
     const url = `https://discord.com/api/v10/users/@me/applications/${globals.DISCORD_CLIENT_ID}/role-connection`
     const body = {
         platform_name: 'Example Linked Role Discord Bot',
@@ -31,6 +35,7 @@ export async function deleteUserMetadata(token: string) {
 }
 
 export async function getOAuthTokens(code: string) {
+    const fetch = await getFetch()
     const url = 'https://discord.com/api/v10/oauth2/token'
     const body = new URLSearchParams({
         client_id: globals.DISCORD_CLIENT_ID,
@@ -55,6 +60,7 @@ export async function getOAuthTokens(code: string) {
 }
 
 export async function getUserData(token: string) {
+    const fetch = await getFetch()
     const url = 'https://discord.com/api/v10/oauth2/@me'
     const response = await fetch(url, {
         headers: {
@@ -69,6 +75,7 @@ export async function getUserData(token: string) {
 }
 
 export async function setRoleMetadata() {
+    const fetch = await getFetch()
     const url = `https://discord.com/api/v10/applications/${globals.DISCORD_CLIENT_ID}/role-connections/metadata`
     const body = [
         {
