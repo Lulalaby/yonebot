@@ -7,7 +7,7 @@ interface YoneshipMetadata {
 export async function pushMetadata(token: string, metadata: YoneshipMetadata) {
     const url = `https://discord.com/api/v10/users/@me/applications/${globals.DISCORD_CLIENT_ID}/role-connection`
     const body = {
-        platform_name: 'Example Linked Role Discord Bot',
+        platform_name: 'Established Yone',
         metadata,
     }
     const response = await fetch(url, {
