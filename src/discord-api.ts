@@ -1,4 +1,5 @@
 import {globals} from './globals'
+import fetch from 'node-fetch'
 
 interface YoneshipMetadata {
     yoneship: 0 | 1
@@ -29,7 +30,7 @@ export async function deleteUserMetadata(token: string) {
     await pushMetadata(token, {yoneship: 0})
 }
 
-export async function getOAuthTokens(code: string): Promise<{access_token: string}> {
+export async function getOAuthTokens(code: string) {
     const url = 'https://discord.com/api/v10/oauth2/token'
     const body = new URLSearchParams({
         client_id: globals.DISCORD_CLIENT_ID,
@@ -47,7 +48,7 @@ export async function getOAuthTokens(code: string): Promise<{access_token: strin
         },
     })
     if (response.ok) {
-        return await response.json()
+        return (await response.json()) as Promise<{access_token: string}>
     } else {
         throw new Error(`Error fetching OAuth tokens: [${response.status}] ${response.statusText}`)
     }
