@@ -35,7 +35,7 @@ export const discordClient = new SlashasaurusClient(
     },
 )
 
-discordClient.on('messageCreate', message => handleMessage(discordClient, message))
+discordClient.on('messageCreate', (message) => handleMessage(discordClient, message))
 discordClient.on('messageReactionAdd', handleNewReaction)
 discordClient.on('messageReactionRemove', handleReactionRemoved)
 discordClient.on('messageReactionRemoveAll', handleAllReactionsRemoved)
@@ -71,13 +71,7 @@ discordClient.useCommandMiddleware(async (interaction, _, __, next) => {
     }
 })
 
-createConnection()
-    .catch((e) => {
-        console.error('Unable to create DB connection', e)
-        process.exit(1)
-    })
-    .then(() => discordClient.login(globals.BOT_TOKEN))
-    .catch((e) => {
-        console.error('Unable to login', e)
-        process.exit(1)
-    })
+discordClient.login(globals.BOT_TOKEN).catch((e) => {
+    console.error('Unable to login', e)
+    process.exit(1)
+})
