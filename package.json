@@ -7,6 +7,7 @@
     "start": "node dist/index.js",
     "clean": "rm -rf ./dist && rm -rf ./src/edgeql-js",
     "generate-edgedb": "npx edgeql-js --output-dir ./src/edgeql-js",
+    "compile": "tsc",
     "build": "npm run clean && npm run generate-edgedb && tsc",
     "migrate": "edgedb migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
