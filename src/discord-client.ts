@@ -8,7 +8,6 @@ import {
     handleAllReactionsRemoved,
     handleEmojiRemoved,
 } from './reaction-handlers'
-import {createConnection} from 'typeorm'
 import {globals} from './globals.js'
 import {UserError} from './utils'
 import {handleMemberUpdate} from './member-update-handler'
