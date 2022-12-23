@@ -10,4 +10,5 @@ export const globals = {
     DISCORD_REDIRECT_URI: process.env.DISCORD_REDIRECT_URI || '',
     NODE_PORT: process.env.NODE_PORT ? parseInt(process.env.NODE_PORT) : 2996,
     YONE_ID: '197560831003721738',
+    LALA_ID: '400943277693730827',
 }
