@@ -1,6 +1,6 @@
 import {SlashCommand} from 'slashasaurus'
 import {auditLogReport, UserError} from '../../utils'
-import {MessageEmbed} from 'discord.js'
+import {EmbedBuilder} from 'discord.js'
 import {RateLimiterMemory, RateLimiterRes} from 'rate-limiter-flexible'
 
 const rateLimiter = new RateLimiterMemory({
@@ -50,7 +50,7 @@ export default new SlashCommand(
                 await auditLogReport(
                     {
                         embeds: [
-                            new MessageEmbed()
+                            new EmbedBuilder()
                                 .setAuthor({
                                     name: member.displayName,
                                     iconURL: member.displayAvatarURL(),

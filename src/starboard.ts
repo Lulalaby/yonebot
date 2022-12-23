@@ -1,18 +1,16 @@
 import {EMOJIS} from './utils'
 import {discordClient} from './discord-client'
 import {
-    Constants,
-    MessageActionRow,
-    MessageButton,
-    MessageEmbed,
+    ActionRowBuilder, ButtonBuilder,
+    Colors, EmbedBuilder, MessageActionRowComponentBuilder,
     MessageReaction,
     PartialMessageReaction,
     TextChannel,
 } from 'discord.js'
 import PQueue from 'p-queue'
-import {MessageButtonStyles} from 'discord.js/typings/enums.js'
 import e from './edgeql-js'
 import {edgedbClient} from './edgedb'
+import {ButtonStyle} from 'discord-api-types/v10'
 
 export const STARBOARD_THRESHOLD = 3
 export const STARBOARD_CHANNEL_DEFAULT_NAME = 'starboard'
@@ -49,12 +47,12 @@ async function handleStarboardUpdateInternal(reaction: MessageReaction | Partial
         return
     }
 
-    const embed = new MessageEmbed()
+    const embed = new EmbedBuilder()
         .setAuthor({
             name: message.member.displayName,
             iconURL: message.member.displayAvatarURL({size: 16}),
         })
-        .setColor(Constants.Colors.BLUE)
+        .setColor(Colors.Blue)
         .setDescription(message.content)
     const attachment = message.attachments.first()
     if (attachment) {
@@ -63,23 +61,31 @@ async function handleStarboardUpdateInternal(reaction: MessageReaction | Partial
 
     embed
         .setTimestamp(message.createdAt)
-        .addField('Channel', `<#${message.channelId}>`)
-        .addField('# Stars', `${numStars} ${EMOJIS.star}`)
+        .addFields(
+            [{
+                name: 'Channel',
+                value: `<#${message.channelId}>`
+            }, {
+                name: '# Stars', value: `${numStars} ${EMOJIS.star}`
+            }]
+        )
 
-    const component = new MessageActionRow().addComponents(
-        new MessageButton()
+    const component = new ActionRowBuilder<MessageActionRowComponentBuilder>().addComponents(
+        new ButtonBuilder()
             .setURL(message.url)
             .setLabel('Go to message')
-            .setStyle(MessageButtonStyles.LINK),
-    )
+            .setStyle(ButtonStyle.Primary),
+    ).toJSON()
 
-    const starboardMessageModel = await e
+    const starboardMessageModels = await e
         .select(e.StarboardMessage, (s) => ({
             starredMessageId: true,
             starboardMessageId: true,
             filter: e.op(s.starredMessageId, '=', messageId),
         }))
         .run(edgedbClient)
+
+    const starboardMessageModel = starboardMessageModels[0]
 
     if (!starboardMessageModel) {
         if (numStars < STARBOARD_THRESHOLD) {

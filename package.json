@@ -6,11 +6,12 @@
   "scripts": {
     "start": "node dist/index.js",
     "clean": "rm -rf ./dist && rm -rf ./src/edgeql-js",
-    "generate-edgedb": "npx edgeql-js --output-dir ./src/edgeql-js",
+    "generate-edgedb": "npx @edgedb/generate edgeql-js --out ./src/edgeql-js",
     "compile": "tsc",
     "build": "npm run clean && npm run generate-edgedb && tsc",
     "migrate": "edgedb migrate",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "register-commands": "node dist/scripts/register-commands.js"
   },
   "repository": {
     "type": "git",
@@ -27,19 +28,21 @@
   "homepage": "https://github.com/yonilerner/yonebot#readme",
   "dependencies": {
     "@fastify/cookie": "^8.3.0",
-    "discord-api-types": "^0.26.1",
-    "discord.js": "^13.6.0",
+    "discord-api-types": "^0.37.24",
+    "discord.js": "^14.7.1",
     "dotenv": "^16.0.0",
-    "edgedb": "^0.19.1",
+    "edgedb": "^1.0.2",
     "fastify": "^4.10.2",
     "got": "^12.0.1",
     "p-queue": "^6.6.2",
     "rate-limiter-flexible": "^2.3.6",
     "reflect-metadata": "^0.1.13",
-    "slashasaurus": "^0.1.0"
+    "slashasaurus": "^0.12.0"
   },
   "devDependencies": {
+    "@edgedb/generate": "^0.0.7",
+    "@types/node": "^18.11.17",
     "prettier": "^2.5.1",
-    "typescript": "^4.5.5"
+    "typescript": "^4.9.4"
   }
 }

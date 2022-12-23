@@ -10,4 +10,8 @@ module default {
             default := datetime_current();
         }
     }
+
+    type ToyStatus {
+        required property enabled -> bool;
+    }
 }

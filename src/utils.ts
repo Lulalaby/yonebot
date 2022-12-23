@@ -1,4 +1,4 @@
-import {Guild, MessageOptions, MessagePayload, TextChannel} from 'discord.js'
+import {Guild, BaseMessageOptions, MessagePayload, TextChannel, ThreadChannel} from 'discord.js'
 
 export const EMOJIS = {
     star: '⭐',
@@ -9,16 +9,19 @@ export async function getAuditLogChannel(guild: Guild): Promise<TextChannel | un
     if (channel instanceof TextChannel) {
         return channel
     }
+    if (channel?.isThread()) {
+        return undefined
+    }
     const channels = await guild.channels.fetch()
-    channel = channels.find((channel) => channel.name === 'audit-log')
-    if (channel instanceof TextChannel) {
-        return channel
+    const guildChannel = channels.find((channel) => channel?.name === 'audit-log')
+    if (guildChannel instanceof TextChannel) {
+        return guildChannel
     }
     return undefined
 }
 
 export async function auditLogReport(
-    message: string | MessagePayload | MessageOptions,
+    message: string | MessagePayload | BaseMessageOptions,
     guild: Guild,
 ) {
     const auditLogChannel = await getAuditLogChannel(guild)

@@ -3,7 +3,7 @@
     "target": "es2017",
     "module": "commonjs",
     "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
-    "skipLibCheck": false, // TODO
+    "skipLibCheck": true,
     "inlineSources": true,
     "inlineSourceMap": true,
     "outDir": "./dist",

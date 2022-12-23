@@ -1,5 +1,6 @@
 import {Client, Message} from 'discord.js'
 import {globals} from './globals'
+import {areToysEnabled} from './toys-utils'
 
 const yoneReactions = [/\byoni/i, /\buni/i, /\byone/i]
 const yoneMentions = [/\bdaddy/i]
@@ -14,6 +15,10 @@ export async function handleMessage(client: Client, message: Message) {
         try {
             await message.react('940082584896028762')
         } catch (e) {}
+    }
+
+    if (!(await areToysEnabled())) {
+        return
     }
 
     if (yoneMentions.some((regex) => regex.test(message.content))) {
